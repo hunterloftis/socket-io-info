@@ -1,20 +1,26 @@
 <html>
 
 <body>
-  <p id='server-time'></p>
+  <p id='dyno-name'></p>
+  <p id='transport-type'></p>
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io()
-    const el = document.getElementById('server-time')
+    const nameP = document.getElementById('dyno-name')
+    const tranP = document.getElementById('transport-type')
 
     setInterval(() => socket.emit('ping'), 10000)
+    setInterval(() => {
+      tranP.innerHTML = `Transport: ${socket.io.engine.transport.name}`
+    }, 1000)
 
     socket.on('name', (name) => {
-      el.innerHTML = `Connected to ${name}`
+      nameP.innerHTML = `Connected to ${name}`
     });
 
     socket.on('disconnect', () => {
-      el.innerHTML = 'Disconnected'
+      nameP.innerHTML = 'Disconnected'
     })
   </script>
 </body>
