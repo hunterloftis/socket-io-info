@@ -7,6 +7,8 @@
     const socket = io()
     const el = document.getElementById('server-time')
 
+    setInterval(() => socket.emit('ping'), 10000)
+
     socket.on('name', (name) => {
       el.innerHTML = `Connected to ${name}`
     });
